@@ -56,25 +56,3 @@ if st.button('🔍 Predict'):
     else:
         st.error('⚠️ Heart Disease Detected. Please consult a healthcare provider.')
 
-# --- Feature Importance Section ---
-st.markdown("---")
-st.subheader("🔎 Feature Importance")
-
-try:
-    # If it's a linear model (LinearSVC), we can access model.coef_
-    importance = np.abs(model.coef_[0])  # absolute value of coefficients
-    feature_names = ['Age', 'Sex', 'Chest Pain Type', 'Resting BP', 'Cholesterol',
-                     'Fasting Blood Sugar', 'Rest ECG', 'Max Heart Rate',
-                     'Exercise Induced Angina', 'Oldpeak', 'Slope', 'Major Vessels', 'Thalassemia']
-    
-    # Create DataFrame for easy viewing
-    importance_df = pd.DataFrame({
-        'Feature': feature_names,
-        'Importance': importance
-    }).sort_values(by='Importance', ascending=False)
-    
-    # Plotting the bar chart
-    st.bar_chart(importance_df.set_index('Feature')['Importance'])
-
-except AttributeError:
-    st.warning("⚠️ Feature importance not available for this model type.")
